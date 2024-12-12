@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.urls import path
 from django.contrib import admin
-from tareas.views import crear_tarea, listar_tareas, actualizar_tarea, eliminar_tarea, pagina_inicio
+from tareas.views import crear_tarea, listar_tareas, actualizar_tarea, eliminar_tarea, Home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', pagina_inicio, name='index'),
+    path('', Home, name='index'),
     path('crear/', crear_tarea, name='CrearTareas'),
     path('listar/', listar_tareas, name='ListarTareas'),
     path('actualizar/<int:id>/', actualizar_tarea, name='ActualizarTareas'),
