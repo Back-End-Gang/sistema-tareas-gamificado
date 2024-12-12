@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Usuario</title>
+    <!-- Agregar Bulma desde un CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f7fc;
+            padding: 40px 0;
+        }
+        .container {
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title has-text-centered">Actualizar Usuario</h1>
+
+        <div class="box">
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="field">
+                    <label for="nombre" class="label">Nombre</label>
+                    <div class="control">
+                        <input class="input" type="text" id="nombre" name="nombre" value="{{ usuario.nombre }}" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="correo" class="label">Correo</label>
+                    <div class="control">
+                        <input class="input" id="correo"  name="correo" required>{{ usuario.correo }}</textarea>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="nivel" class="label">Nivel</label>
+                    <div class="control">
+                        <input class="input" type="number" id="nivel" name="nivel" required>{{ usuario.nivel }}</textarea>
+                    </div>
+                </div>
+
+                <div class="field is-grouped is-grouped-centered">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Actualizar Usuario</button>
+                    </div>
+                    <div class="control">
+                        <a class="button is-light" href="{% url 'listar_tareas' %}">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

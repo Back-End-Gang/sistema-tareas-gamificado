@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Usuario</title>
+    <!-- Agregar Bulma desde un CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f7fc;
+            padding: 40px 0;
+        }
+        .container {
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title has-text-centered">Crear un Nuevo Usuario</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <!-- Campo para el título -->
+            <div class="field">
+                <label class="label" for="titulo">Nombre</label>
+                <div class="control">
+                    <input class="input" type="text" id="titulo" name="titulo" required>
+                </div>
+            </div>
+
+            <!-- Campo para la descripción -->
+            <div class="field">
+                <label class="label" for="correo">Correo</label>
+                <div class="control">
+                    <input class="input" type="text" id="correo" name="correo" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="nivel">Nivel</label>
+                    <div class="control">
+                        <div>
+                            <input class="input" type="number" id="nivel" name="nivel" min="1" max="100" required>
+                        </div>
+                    </div>
+            </div>
+
+
+            <!-- Botón de envío -->
+            <div class="field is-grouped is-grouped-centered">
+                <div class="control">
+                    <button class="button is-link" type="submit">Crear Usuario</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Enlace para volver a la lista de usuarios -->
+        <p class="has-text-centered">
+            <a class="button is-text" href="{% url 'listar_usuarios' %}">Volver a usuarios</a>
+        </p>
+    </div>
+
+</body>
+</html>
