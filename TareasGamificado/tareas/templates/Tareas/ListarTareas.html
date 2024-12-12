@@ -41,10 +41,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for tarea in page_obj %}
+                    {% for tarea in tareas %}
                         <tr>
                             <td>{{ tarea.titulo }}</td>
                             <td>{{ tarea.descripcion }}</td>
+                            <td>
+                                {% if tarea.usuario %}
+                                    {{ tarea.usuario.nombre }}
+                                {% else %}
+                                    Nadie
+                                {% endif %}
+                            </td>
                             <td>{{ tarea.estado }}</td>
                             <td>{{ tarea.puntos }}</td>
                             <td>
