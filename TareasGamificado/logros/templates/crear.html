@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Logro</title>
+</head>
+<body>
+    <h1>Crear Logro</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" required>
+        <label for="descripcion">Descripción:</label>
+        <textarea name="descripcion" id="descripcion" required></textarea>
+        <button type="submit">Guardar</button>
+    </form>
+    <a href="{% url 'listar_logros' %}">Volver</a>
+</body>
+</html>
