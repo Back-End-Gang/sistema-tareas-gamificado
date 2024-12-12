@@ -58,7 +58,7 @@ def crear_tarea(request):
 @login_required
 def listar_tareas(request):
     # Filtrar tareas por el usuario autenticado
-    tareas = Tarea.objects.filter(usuario=request.user).select_related('logro')
+    tareas = Tarea.objects.select_related('usuario').all()
     paginator = Paginator(tareas, 10)  # 10 tareas por página
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
