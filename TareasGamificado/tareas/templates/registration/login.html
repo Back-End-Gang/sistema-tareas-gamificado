@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+  </head>
+  <body>
+    <p class="title">¡Logueate!</p>
+    <div class="container">
+      <h1>Login</h1>
+      {% if messages %}
+          {% for message in messages %}
+              {% if message.tags == 'error' %}
+                  <center><h4 style="color: firebrick;">{{message}}</h4></center>
+              {% else %}
+                  <center><h4 style="color: dodgerblue;">{{message}}</h4></center>
+              {% endif %}
+          {% endfor %}
+      {% endif %}
+        
+      <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="txt_field">
+          <input type="text" class="input" required name="username">
+          <span></span>
+          <label>Usuario</label>
+        </div>
+
+        <div class="txt_field">
+          <input type="password" class="input" required name="password">
+          <span></span>
+          <label>Contraseña</label>
+        </div>
+
+        <input type="submit" class="button is-danger" value="Login">
+
+      </form>
+    </div>
+    
+  </body>
+</html>
