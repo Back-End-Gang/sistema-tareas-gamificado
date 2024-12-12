@@ -23,7 +23,7 @@
 
         <form method="POST">
             {% csrf_token %}
-            <!-- Campo para el título -->
+
             <div class="field">
                 <label class="label" for="titulo">Título</label>
                 <div class="control">
@@ -31,7 +31,6 @@
                 </div>
             </div>
 
-            <!-- Campo para la descripción -->
             <div class="field">
                 <label class="label" for="descripcion">Descripción</label>
                 <div class="control">
@@ -39,16 +38,14 @@
                 </div>
             </div>
 
-
-            <!-- Campo para seleccionar el estado -->
             <div class="field">
                 <label class="label" for="estado">Estado</label>
                 <div class="control">
                     <div class="select">
                         <select name="estado" id="estado">
-                            <option>-- Elige un estado --</option>
-                                <option value="pendiente">Pendiente</option>
-                                <option value="completada">Completada</option>
+                            <option value="">-- Elige un estado --</option>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="completada">Completada</option>
                         </select>
                     </div>
                 </div>
@@ -58,13 +55,11 @@
                 <label class="label" for="puntos">Puntos (1-100)</label>
                     <div class="control">
                         <div>
-                            <input value="puntos" type="number" id="puntos" name="puntos" min="1" max="100" />
+                            <input class="input" type="number" id="puntos" name="puntos" min="1" max="100" />
                         </div>
                     </div>
             </div>
 
-
-            <!-- Botón de envío -->
             <div class="field is-grouped is-grouped-centered">
                 <div class="control">
                     <button class="button is-link" type="submit">Crear tarea</button>
@@ -72,7 +67,6 @@
             </div>
         </form>
 
-        <!-- Enlace para volver a la lista de tareas -->
         <p class="has-text-centered">
             <a class="button is-text" href="{% url 'listar_tareas' %}">Volver a mis tareas</a>
         </p>
