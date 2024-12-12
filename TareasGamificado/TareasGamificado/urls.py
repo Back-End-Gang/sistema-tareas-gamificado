@@ -22,8 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Home, name='index'),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html')),
-    path('crear/', crear_tarea, name='CrearTareas'),
-    path('listar/', listar_tareas, name='ListarTareas'),
-    path('actualizar/<int:id>/', actualizar_tarea, name='ActualizarTareas'),
-    path('eliminar/<int:id>/', eliminar_tarea, name='EliminarTareas'),
+    path('crear_tarea/', crear_tarea, name='crear_tarea'),
+    path('listar_tareas/', listar_tareas, name='listar_tareas'),
+    path('actualizar_tarea/<int:id>/', actualizar_tarea, name='actualizar_tarea'),
+    path('eliminar_tarea/<int:id>/', eliminar_tarea, name='eliminar_tarea'),
 ]

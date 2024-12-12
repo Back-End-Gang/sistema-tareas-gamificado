@@ -24,7 +24,7 @@ def LoginVista(request):
         if user is not None:
             login(request, user)
 
-            return redirect('home')
+            return redirect('crear')
         
         else:
             messages.error(request, "Credenciales inválidas")
