@@ -65,6 +65,23 @@
             <label for="descripcion">Descripción</label>
             <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
 
+            <div class="field">
+                <label class="label" for="usuario">Usuario</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="usuario" id="usuario">
+                            <option value="">Elige un Usuario</option>
+
+                            {% for usuario in usuarios %}
+
+                            <option value="{{ usuario.id }}">{{ usuario.nombre }}</option>
+
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             <button type="submit">Guardar</button>
         </form>
         <a href="{% url 'listar_logros' %}">Volver a la lista</a>
