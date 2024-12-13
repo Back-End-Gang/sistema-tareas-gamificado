@@ -20,6 +20,7 @@ from tareas.views import crear_tarea, listar_tareas, actualizar_tarea, eliminar_
 from usuarios.views import *
 from logros.views import *
 from TareasGamificadoAPI import views as tarea_views
+from LogrosGamificadoAPI import views as logro_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -40,7 +41,11 @@ urlpatterns = [
     path('crear/', crear_logro, name='crear_logro'),
     path('actualizar_logros/<int:id>/', editar_logro, name='editar_logro'),
     path('eliminar_logro/<int:id>/', eliminar_logro, name='eliminar_logro'),
-    #API
+    #API Tarea
     path('tareasListApi/', tarea_views.tarea_list, name='tareaListaAPI'),
     path('tareasListApi/<int:pk>/', tarea_views.tarea_detail, name='tarea_detail'),
+    #API Logro
+    path('logrosListApi/', logro_views.logros_list, name='logrosListaAPI'),
+    path('logrosListApi/<int:pk>/', logro_views.logros_detail, name='logros_detail'),
+    
 ]
