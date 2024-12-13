@@ -19,6 +19,7 @@ from django.contrib import admin
 from tareas.views import crear_tarea, listar_tareas, actualizar_tarea, eliminar_tarea, Home, LoginVista
 from usuarios.views import *
 from logros.views import *
+from TareasGamificadoAPI import views as tarea_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,4 +40,7 @@ urlpatterns = [
     path('crear/', crear_logro, name='crear_logro'),
     path('actualizar_logros/<int:id>/', editar_logro, name='editar_logro'),
     path('eliminar_logro/<int:id>/', eliminar_logro, name='eliminar_logro'),
+    #API
+    path('tareasListApi/', tarea_views.tarea_list, name='tareaListaAPI'),
+    path('tareasListApi/<int:pk>/', tarea_views.tarea_detail, name='tarea_detail'),
 ]
