@@ -21,7 +21,7 @@ from usuarios.views import *
 from logros.views import *
 from TareasGamificadoAPI import views as tarea_views
 from LogrosGamificadoAPI import views as logro_views
-
+from UsuariosGamificadoAPI import views as usuario_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Home, name='index'),
@@ -47,5 +47,8 @@ urlpatterns = [
     #API Logro
     path('logrosListApi/', logro_views.logros_list, name='logrosListaAPI'),
     path('logrosListApi/<int:pk>/', logro_views.logros_detail, name='logros_detail'),
+    #API Usuario
+    path('usuariosListApi/', usuario_views.usuarios_list, name='usuariosListaAPI'),
+    path('usuariosListApi/<int:pk>/', usuario_views.usuarios_detail, name='usuarios_detail'),
     
 ]
