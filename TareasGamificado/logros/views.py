@@ -13,12 +13,12 @@ def listar_logros(request):
 @login_required
 def crear_logro(request):
     if request.method == 'POST':
+        usuario = request.POST.get('usuario')
         nombre = request.POST.get('nombre')
         descripcion = request.POST.get('descripcion')
-        usuario = request.user  # Asigna el usuario logueado
         Logro.objects.create(nombre=nombre, descripcion=descripcion, usuario=usuario)
         return redirect('listar_logros')
-    return render(request, 'logros/crear_logro.html')
+    return render(request, 'logros/crear.html')
 
 @login_required
 def editar_logro(request, id):
@@ -26,9 +26,10 @@ def editar_logro(request, id):
     if request.method == 'POST':
         logro.nombre = request.POST.get('nombre')
         logro.descripcion = request.POST.get('descripcion')
+        logro.usuario = request.POST.get('usuario')
         logro.save()
         return redirect('listar_logros')
-    return render(request, 'logros/editar_logro.html', {'logro': logro})
+    return render(request, 'logros/actualizar_logros.html', {'logro': logro})
 
 @login_required
 def eliminar_logro(request, id):
@@ -36,4 +37,4 @@ def eliminar_logro(request, id):
     if request.method == 'POST':
         logro.delete()
         return redirect('listar_logros')
-    return render(request, 'logros/eliminar_logro.html', {'logro': logro})
+    return render(request, 'logros/eliminar_logros.html', {'logro': logro})

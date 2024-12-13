@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Logro</title>
+    <!-- Enlace a Bulma -->
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f7fc;
+            padding: 40px 0;
+        }
+        .container {
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <header class="hero is-primary">
+        <div class="hero-body">
+            <h1 class="title has-text-centered">Editar Logro</h1>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <form method="post" class="box">
+                {% csrf_token %}
+                <div class="field">
+                    <label class="label" for="nombre">Nombre:</label>
+                    <div class="control">
+                        <input 
+                            class="input" 
+                            type="text" 
+                            name="nombre" 
+                            id="nombre" 
+                            value="{{ logro.nombre }}" 
+                            required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="descripcion">Descripción:</label>
+                    <div class="control">
+                        <textarea 
+                            class="textarea" 
+                            name="descripcion" 
+                            id="descripcion" 
+                            required>{{ logro.descripcion }}</textarea>
+                    </div>
+                </div>
+                <div class="field is-grouped is-grouped-right">
+                    <div class="control">
+                        <button type="submit" class="button is-success">Guardar</button>
+                    </div>
+                    <div class="control">
+                        <a href="{% url 'listar_logros' %}" class="button is-link">Volver</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
