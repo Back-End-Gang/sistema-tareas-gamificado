@@ -67,19 +67,19 @@ def listar_tareas(request):
 
 @login_required
 def actualizar_tarea(request, id):
-    tarea = get_object_or_404(Tarea, id=id, usuario=request.user)  # Verificar que la tarea pertenece al usuario
+    tarea = get_object_or_404(Tarea, id=id)
     if request.method == 'POST':
         tarea.titulo = request.POST.get('titulo')
         tarea.descripcion = request.POST.get('descripcion')
         tarea.save()
         return redirect('listar_tareas')
-    return render(request, 'tareas/ActualizarTarea.html', {'tarea': tarea})
+    return render(request, 'tareas/ActualizarTareas.html', {'tarea': tarea})
 
 
 @login_required
 def eliminar_tarea(request, id):
-    tarea = get_object_or_404(Tarea, id=id, usuario=request.user)  # Verificar que la tarea pertenece al usuario
+    tarea = get_object_or_404(Tarea, id=id)
     if request.method == 'POST':
         tarea.delete()
         return redirect('listar_tareas')
-    return render(request, 'Tareas/EliminarTarea.html', {'tarea': tarea})
+    return render(request, 'Tareas/EliminarTareas.html', {'tarea': tarea})

@@ -39,6 +39,23 @@
             </div>
 
             <div class="field">
+                <label class="label" for="usuario">Usuario</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="usuario" id="usuario">
+                            <option value="">Elige un Usuario</option>
+
+                            {% for usuario in usuarios %}
+
+                            <option value="{{ usuario.id }}">{{ usuario.nombre }}</option>
+
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
                 <label class="label" for="estado">Estado</label>
                 <div class="control">
                     <div class="select">
