@@ -8,40 +8,97 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
 </head>
 <body>
-    <P class="title">¡Bienvenid@ a la página de inicio!</P> <br />
-    <p class="subtitle">Debes loguearte para ingresar a las diferentes opciones!</p>
+    <div class="container is-fluid">
+        <P class="title">¡Bienvenid@ a la página de inicio!</P> <br />
+        <p class="subtitle">Debes loguearte para ingresar a las diferentes opciones!</p>
 
-    <form action="accounts/login/">
-        <input type="submit" class="button is-dark" value="Ir al login" />
-    </form>
-    
-    <br />
+        <form action="accounts/login/">
+            <input type="submit" class="button is-dark" value="Ir al login" />
+        </form>
+        
+        <br />
 
-    <form action="/listar_tareas/">
-        <input type="submit" class="button is-dark" value="Tareas" />
-    </form>
-    <form action="/tareasListApi/">
-        <input type="submit" class="button is-dark" target="_blank" value="API de Tareas" />
-    </form>
+        <div class="dropdown is-hoverable">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                <span>Tareas</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+              <div class="dropdown-content">
+                <div class="dropdown-item">
+                  <p>
+                    <form action="/listar_tareas/">
+                        <input type="submit" class="button is-dark" value="Tareas" />
+                    </form>
+                    <form action="/tareasListApi/">
+                        <input type="submit" class="button is-dark" target="_blank" value="API de Tareas" />
+                    </form>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    <br />
+        <br />
 
-    <form action="/listar_usuarios/">
-        <input type="submit" class="button is-dark" value="Usuarios" />
-    </form>
-    <form action="/usuariosListApi/">
-        <input type="submit" class="button is-dark" target="_blank" value="API de Usuarios" />
-    </form>
+        <div class="dropdown is-hoverable">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                <span>Usuarios</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+              <div class="dropdown-content">
+                <div class="dropdown-item">
+                  <p>
+                    <form action="/listar_usuarios/">
+                        <input type="submit" class="button is-dark" value="Usuarios" />
+                    </form>
+                    <form action="/usuariosListApi/">
+                        <input type="submit" class="button is-dark" target="_blank" value="API de Usuarios" />
+                    </form>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    <br />
+        <br />
 
-    <form action="/listar_logros/">
-        <input type="submit" class="button is-dark" value="Logro" />
-    </form>
-    <form action="logrosListApi/">
-        <input type="submit" class="button is-dark" target="_blank" value="API de Logros" />
-    </form>
+        <div class="dropdown is-hoverable">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                <span>Logros</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+              <div class="dropdown-content">
+                <div class="dropdown-item">
+                  <p>
+                    <form action="/listar_logros/">
+                        <input type="submit" class="button is-dark" value="Logro" />
+                    </form>
+                    <form action="logrosListApi/">
+                        <input type="submit" class="button is-dark" target="_blank" value="API de Logros" />
+                    </form>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
+
+    </div>
 
 </body>
 </html>
