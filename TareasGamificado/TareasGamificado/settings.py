@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'logros',
     'TareasGamificadoAPI',
     'LogrosGamificadoAPI',
+    'UsuariosGamificadoAPI',
 ]
 
 MIDDLEWARE = [
