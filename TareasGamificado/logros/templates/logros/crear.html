@@ -4,66 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Logro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
+            background-color: #f4f7fc;
+            padding: 40px 0;
         }
         .container {
             max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin: 10px 0 5px;
-        }
-        input, textarea, button {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-            color: #4CAF50;
-            text-decoration: none;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h1>Crear Logro</h1>
+        <h1 class="title has-text-centered">Crear un Nuevo Logro</h1>
+
         <form method="POST">
             {% csrf_token %}
-            <label for="nombre">Nombre del Logro</label>
-            <input type="text" id="nombre" name="nombre" required>
 
-            <label for="descripcion">Descripción</label>
-            <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+            <div class="field">
+                <label class="label" for="nombre">Nombre del Logro</label>
+                <div class="control">
+                    <input class="input" type="text" name="nombre" id="nombre" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="descripcion">Descripción</label>
+                <div class="control">
+                    <textarea class="textarea" name="descripcion" id="descripcion" required></textarea>
+                </div>
+            </div>
 
             <div class="field">
                 <label class="label" for="usuario">Usuario</label>
@@ -82,9 +54,17 @@
                 </div>
             </div>
 
-            <button type="submit">Guardar</button>
+            <div class="field is-grouped is-grouped-centered">
+                <div class="control">
+                    <button class="button is-link" type="submit">Crear Logro</button>
+                </div>
+            </div>
         </form>
-        <a href="{% url 'listar_logros' %}">Volver a la lista</a>
+
+        <p class="has-text-centered">
+            <a class="button is-text" href="{% url 'listar_logros' %}">Volver a logros</a>
+        </p>
     </div>
+
 </body>
 </html>

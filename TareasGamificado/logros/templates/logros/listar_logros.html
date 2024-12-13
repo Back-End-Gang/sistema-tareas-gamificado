@@ -5,51 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Logros</title>
     <!-- Enlace a Bulma -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f7fc;
+            padding: 40px 0;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination a {
+            margin: 0 5px;
+        }
+    </style>
+    
 </head>
 <body>
-    <header class="hero is-primary">
-        <div class="hero-body">
-            <h1 class="title">Lista de Logros</h1>
-        </div>
-    </header>
+    <div class="container">
+        <h1 class="title has-text-centered">Logros</h1>
 
-    <nav class="navbar is-light">
-        <div class="navbar-start">
-            <a href="{% url 'crear_logro' %}" class="button is-link">Crear nuevo logro</a>
-        </div>
-    </nav>
-
-    <main class="section">
-        <div class="container">
-            <ul>
+        <div class="box">
+            <table class="table is-fullwidth is-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Usuario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
                 {% for logro in page_obj %}
-                    <li class="box">
-                        <p>
-                            <strong>{{ logro.nombre }}</strong>: {{ logro.descripcion }}
-                        </p>
-                        <div class="buttons">
-                            <a href="{% url 'editar_logro' logro.id %}" class="button is-warning is-small">Editar</a>
-                            <a href="{% url 'eliminar_logro' logro.id %}" class="button is-danger is-small">Eliminar</a>
-                        </div>
-                    </li>
+                <tr>
+                    <td>{{ logro.nombre }}</td>
+                    <td>{{ logro.descripcion }}</td>
+                    <td>
+                        {% if logro.usuario %}
+                            {{ logro.usuario.nombre }}
+                        {% else %}
+                            Nadie
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="button is-info is-small" href="{% url 'editar_logro' logro.id %}">Actualizar</a>
+                        <a class="button is-danger is-small" href="{% url 'eliminar_logro' logro.id %}">Eliminar</a>
+                    </td>
+                </tr>
                 {% empty %}
-                    <li class="notification is-warning">No hay logros disponibles.</li>
+                <tr>
+                    <td colspan="5" class="has-text-centered">No hay logros disponibles</td>
+                </tr>
                 {% endfor %}
-            </ul>
-
-            <div class="pagination is-centered mt-5">
-                {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-previous" aria-label="Página anterior">Anterior</a>
-                {% endif %}
-                <span class="pagination-list">
-                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
-                </span>
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}" class="pagination-next" aria-label="Página siguiente">Siguiente</a>
-                {% endif %}
-            </div>
+                </tbody>
+            </table>
         </div>
-    </main>
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a class="button is-link is-small" href="?page=1">&laquo; Primera</a>
+                    <a class="button is-link is-small" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                {% endif %}
+                
+                <span class="current">
+                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                </span>
+                
+                {% if page_obj.has_next %}
+                    <a class="button is-link is-small" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                    <a class="button is-link is-small" href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+        <p class="has-text-centered">
+            <a class="button is-primary" href="{% url 'crear_logro' %}">Crear nuevo logro</a>
+        </p>
+        <form action="/">
+            <input type="submit" class="button is-dark" value="Volver a inicio" />
+        </form>
+    </div>
 </body>
 </html>

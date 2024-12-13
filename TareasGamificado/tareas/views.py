@@ -57,7 +57,6 @@ def crear_tarea(request):
 
 @login_required
 def listar_tareas(request):
-    # Filtrar tareas por el usuario autenticado
     tareas = Tarea.objects.select_related('usuario').all()
     paginator = Paginator(tareas, 10)  # 10 tareas por página
     page_number = request.GET.get('page')
@@ -68,12 +67,16 @@ def listar_tareas(request):
 @login_required
 def actualizar_tarea(request, id):
     tarea = get_object_or_404(Tarea, id=id)
+    usuarios = Usuario.objects.all()
     if request.method == 'POST':
         tarea.titulo = request.POST.get('titulo')
         tarea.descripcion = request.POST.get('descripcion')
+        usuario_id = request.POST.get('usuario')
+        tarea.usuario = Usuario.objects.get(id=usuario_id) if usuario_id else None
+        
         tarea.save()
         return redirect('listar_tareas')
-    return render(request, 'tareas/ActualizarTareas.html', {'tarea': tarea})
+    return render(request, 'tareas/ActualizarTareas.html', {'tarea': tarea, 'usuarios': usuarios})
 
 
 @login_required

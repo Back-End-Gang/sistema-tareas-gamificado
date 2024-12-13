@@ -48,6 +48,22 @@
                             required>{{ logro.descripcion }}</textarea>
                     </div>
                 </div>
+                <div class="field">
+                    <label class="label" for="usuario">Usuario</label>
+                    <div class="control">
+                        <div class="select">
+                            <select name="usuario" id="usuario">
+                                <option value="">Elige un Usuario</option>
+    
+                                {% for usuario in usuarios %}
+    
+                                <option value="{{ usuario.id }}">{{ usuario.nombre }}</option>
+    
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="field is-grouped is-grouped-right">
                     <div class="control">
                         <button type="submit" class="button is-success">Guardar</button>

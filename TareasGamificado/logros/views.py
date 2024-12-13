@@ -26,13 +26,15 @@ def crear_logro(request):
 @login_required
 def editar_logro(request, id):
     logro = get_object_or_404(Logro, id=id)
+    usuarios = Usuario.objects.all()
     if request.method == 'POST':
         logro.nombre = request.POST.get('nombre')
         logro.descripcion = request.POST.get('descripcion')
-        logro.usuario = request.POST.get('usuario')
+        usuario_id = request.POST.get('usuario')
+        logro.usuario = Usuario.objects.get(id=usuario_id) if usuario_id else None
         logro.save()
         return redirect('listar_logros')
-    return render(request, 'logros/actualizar_logros.html', {'logro': logro})
+    return render(request, 'logros/actualizar_logros.html', {'logro': logro, 'usuarios': usuarios})
 
 @login_required
 def eliminar_logro(request, id):
