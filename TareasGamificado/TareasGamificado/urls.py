@@ -17,6 +17,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.contrib import admin
 from tareas.views import crear_tarea, listar_tareas, actualizar_tarea, eliminar_tarea, Home, LoginVista
+from usuarios.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +27,9 @@ urlpatterns = [
     path('listar_tareas/', listar_tareas, name='listar_tareas'),
     path('actualizar_tarea/<int:id>/', actualizar_tarea, name='actualizar_tarea'),
     path('eliminar_tarea/<int:id>/', eliminar_tarea, name='eliminar_tarea'),
+    
+    path('listar_usuarios/', listar_usuarios, name='listar_usuarios'),
+    path('crear_usuario/', crear_usuario, name='crear_usuario'),
+    path('editar_usuario/<int:id>/', editar_usuario, name='editar_usuario'),
+    path('eliminar_usuario/<int:id>/', eliminar_usuario, name='eliminar_usuario')
 ]

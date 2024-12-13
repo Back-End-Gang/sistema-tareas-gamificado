@@ -35,13 +35,13 @@
                     <tr>
                         <th>Título</th>
                         <th>Descripción</th>
+                        <th>Usuario Asignado</th>
                         <th>Estado</th>
                         <th>Puntos</th>
-                        <th>Usuario (Falta implementar)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for tarea in tareas %}
+                    {% for tarea in page_obj.object_list %}
                         <tr>
                             <td>{{ tarea.titulo }}</td>
                             <td>{{ tarea.descripcion }}</td>
