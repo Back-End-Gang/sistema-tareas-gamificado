@@ -15,9 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from tareas.views import crear_tarea, listar_tareas, actualizar_tarea, eliminar_tarea, Home, LoginVista
+from usuarios.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('tareas.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('', Home, name='index'),
+    path('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html')),
+    path('crear_tarea/', crear_tarea, name='crear_tarea'),
+    path('listar_tareas/', listar_tareas, name='listar_tareas'),
+    path('actualizar_tarea/<int:id>/', actualizar_tarea, name='actualizar_tarea'),
+    path('eliminar_tarea/<int:id>/', eliminar_tarea, name='eliminar_tarea'),
+    path('listar_usuarios', listar_usuarios, name='listar_usuarios'),
+    path('crear_usuario', crear_usuario, name='listar_usuarios'),
+    path('editar_usuario', editar_usuario, name='listar_usuarios'),
+    path('eliminar_usuario', eliminar_usuario, name='listar_usuarios')
 ]
