@@ -41,7 +41,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for tarea in tareas %}
+                    {% for tarea in page_obj.object_list %}
                         <tr>
                             <td>{{ tarea.titulo }}</td>
                             <td>{{ tarea.descripcion }}</td>

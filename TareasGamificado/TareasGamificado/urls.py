@@ -27,8 +27,8 @@ urlpatterns = [
     path('listar_tareas/', listar_tareas, name='listar_tareas'),
     path('actualizar_tarea/<int:id>/', actualizar_tarea, name='actualizar_tarea'),
     path('eliminar_tarea/<int:id>/', eliminar_tarea, name='eliminar_tarea'),
-    path('listar_usuarios', listar_usuarios, name='listar_usuarios'),
-    path('crear_usuario', crear_usuario, name='listar_usuarios'),
-    path('editar_usuario', editar_usuario, name='listar_usuarios'),
-    path('eliminar_usuario', eliminar_usuario, name='listar_usuarios')
+    path('listar_usuarios/', listar_usuarios, name='listar_usuarios'),
+    path('crear_usuario/', crear_usuario, name='crear_usuario'),
+    path('editar_usuario/<int:id>/', editar_usuario, name='editar_usuario'),
+    path('eliminar_usuario/<int:id>/', eliminar_usuario, name='eliminar_usuario')
 ]

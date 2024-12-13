@@ -31,7 +31,7 @@ def editar_usuario(request, id):
         usuario.nivel = request.POST.get('nivel')
         usuario.save()
         return redirect('listar_usuarios')
-    return render(request, 'usuarios/actualizar_usuarios.html', {'usuario': usuario})
+    return render(request, 'usuarios/actualizar_usuario.html', {'usuario': usuario})
 
 @login_required
 def eliminar_usuario(request, id):

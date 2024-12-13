@@ -36,16 +36,17 @@
                         <th>Nombre</th>
                         <th>Correo</th>
                         <th>Nivel</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for usuario in usuarios %}
+                    {% for usuario in page_obj.object_list %}
                         <tr>
                             <td>{{ usuario.nombre }}</td>
                             <td>{{ usuario.correo }}</td>
                             <td>{{ usuario.nivel }}</td>
                             <td>
-                                <a class="button is-info is-small" href="{% url 'actualizar_usuario' usuario.id %}">Actualizar</a>
+                                <a class="button is-info is-small" href="{% url 'editar_usuario' usuario.id %}">Actualizar</a>
                                 <a class="button is-danger is-small" href="{% url 'eliminar_usuario' usuario.id %}">Eliminar</a>
                             </td>
                         </tr>
@@ -77,7 +78,7 @@
         </div>
 
         <p class="has-text-centered">
-            <a class="button is-primary" href="{% url 'usuarios/crear' %}">Crear nuevo usuario</a>
+            <a class="button is-primary" href="{% url 'crear_usuario' %}">Crear nuevo usuario</a>
         </p>
     </div>
 
