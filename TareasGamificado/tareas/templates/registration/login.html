@@ -5,41 +5,77 @@
     <meta charset="utf-8">
     <title>Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+
+    <style>
+      .seccion-contenido {
+        background-color: #707070; /* Color de fondo */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100vh; /* Tamaño vertical de la sección */
+      }
+      .seccion-imagen img { /* No funciona por ahora */
+        max-width: 80%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .contenedor-form {
+        margin: 0 auto;
+      }
+      .field .input { /* Ajusta el tamaño del elemento */
+        margin: 0 auto;
+      }
+      .field .button {
+        max-width: 200px;
+        margin: 0 auto;
+      }
+    </style>
   </head>
+
   <body>
-    <p class="title">¡Logueate!</p>
-    <div class="container">
-      <h1>Login</h1>
-      {% if messages %}
-          {% for message in messages %}
-              {% if message.tags == 'error' %}
-                  <center><h4 style="color: firebrick;">{{message}}</h4></center>
-              {% else %}
-                  <center><h4 style="color: dodgerblue;">{{message}}</h4></center>
-              {% endif %}
-          {% endfor %}
-      {% endif %}
-        
-      <form method="POST" action="{% url 'api-login' %}">
+    <div class="columns is-gapless is-fullheight">
 
-        {% csrf_token %}
+      <div class="column is-one-third seccion-contenido">
+        <p class="title has-text-centered">Inicio de Sesión</p>
+        <div class="contenedor-form">
 
-        <div class="txt_field">
-          <input type="text" class="input" required name="username">
-          <span></span>
-          <label>Usuario</label>
+          {% if url_actual == 'api/' %}
+            <form method="POST" action="{% url 'api-login' %}">
+          {% else %}
+            <form method="POST">
+          {% endif %}
+          
+              {% csrf_token %}
+
+              <div class="field">
+                <label class="label">Usuario</label>
+                <div class="control">
+                  <input type="text" class="input" required name="username" placeholder="Ingrese su usuario">
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Contraseña</label>
+                <div class="control">
+                  <input type="password" class="input" required name="password" placeholder="Ingrese su contraseña">
+                </div>
+              </div>
+
+              <br/>
+
+              <div class="field">
+                <div class="control">
+                  <input type="submit" class="button is-danger is-fullwidth" value="Iniciar Sesión">
+                </div>
+              </div>
+            </form>
         </div>
+      </div>
 
-        <div class="txt_field">
-          <input type="password" class="input" required name="password">
-          <span></span>
-          <label>Contraseña</label>
-        </div>
-
-        <input type="submit" class="button is-danger" value="Login">
-
-      </form>
+      <div class="column seccion-imagen">
+        <img src="/../sistema-tareas-gamificado/TareasGamificado/img/esqueleto-cool.png" alt="">
+      </div>
     </div>
-    
   </body>
 </html>

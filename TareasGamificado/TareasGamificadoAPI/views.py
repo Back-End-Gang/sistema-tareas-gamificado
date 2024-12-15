@@ -1,5 +1,6 @@
 from tareas.models import Tarea
-from django.contrib.auth import authenticate
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 from TareasGamificadoAPI.serializers import *
@@ -17,8 +18,7 @@ from logros.models import Logro
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
-    print("token regenerado")
-    return print(refresh.access_token), {
+    return {
         'refresh': str(refresh),
         'access': str(refresh.access_token),
     }
@@ -57,25 +57,35 @@ def api_vista_login(request):
         }, status=status.HTTP_401_UNAUTHORIZED), redirect('login')
     
 class UserLoginView(APIView):
-    permission_classes = [AllowAny] 
+    permission_classes = [AllowAny] # Permite entrar a la página sin tener que estar autenticado (versión inversa del decorator @loginrequired)
 
     template_name = "registration/login.html"
 
     def get(self, request, format=None):
+        storage = messages.get_messages(request)
+        storage.used = True  # This clears the current messages
         return render(request, self.template_name)
 
     def post(self, request, format=None):
+
         serializer = UserLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        username = request.data.get('username')
-        password = request.data.get('password')
+
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
         user = authenticate(username=username, password=password)
+
         if user is not None:
+            login(request, user)
             token = get_tokens_for_user(user)
-            return Response({'token':token,'msg':'Login Success'}, status=status.HTTP_200_OK) and redirect('index')
+
+            print("Token:", token)
+            messages.success(request, f"DEV: Inicio de sesión exitoso. Token de acceso: \n{token['access']}")
+            return redirect('index')
         else:
-            print('error')
-            return Response({'errors':{'non_field_errors':['Username or Password is not Valid']}}, status=status.HTTP_404_NOT_FOUND)
+            messages.error(request, "Invalid username or password")
+            return render(request, self.template_name)
 
 class TareaListaCrear(generics.ListCreateAPIView):
     queryset = Tarea.objects.all() #Obtiene todos los datos existentes
