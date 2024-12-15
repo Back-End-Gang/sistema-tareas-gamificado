@@ -11,27 +11,6 @@ from usuarios.models import Usuario
 def Home(request):
     return render(request, 'index.html')
 
-@login_required
-
-def LoginVista(request):
-
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-
-            return redirect('crear')
-        
-        else:
-            messages.error(request, "Credenciales inválidas")
-            return redirect('login')
-
-    return render(request, 'login.html')
-
 
 @login_required
 def crear_tarea(request):
