@@ -44,13 +44,39 @@ Descripción: Representa el nivel o el rango del usuario dentro de la aplicació
 Valor por defecto: 1.
 
 
-
-
-
-
 # 3. Tareas
-El modelo Tareas representa a una tarea dentro de la aplicación. Contiene información básica sobre el , como su nombre, correo electrónico y nivel. Este modelo es esencial para gestionar a los usuarios en la aplicación, permitiendo almacenar y acceder a sus datos.
+El modelo de Tarea se usa para representar las actividades o acciones que un usuario puede realizar dentro de la app. Cada tarea tiene un título, una descripción, un estado, una cantidad de puntos y está asociada a un usuario en particular. Sirve para llevar el control de las tareas pendientes, completadas o cualquier cosa que el usuario deba hacer dentro de la plataforma.
 
+# Campos:
+# titulo (CharField):
+Tipo: CharField
+Descripción: Almacena el título o nombre corto de la tarea. Este campo describe brevemente el propósito de la tarea, por ejemplo, "Completar nivel 1", "Enviar reporte", etc.
+Longitud máxima: 100 caracteres.
+
+# descripcion (TextField):
+Tipo: TextField
+Descripción: Este campo almacena una descripción más detallada de la tarea, explicando los pasos a seguir, el contexto de la tarea, o cualquier otro detalle importante que el usuario deba conocer.
+
+# estado (CharField):
+Tipo: CharField
+Descripción: Define el estado de la tarea. Utiliza una lista de opciones predefinidas que indican si la tarea está "pendiente" o "completada".
+Opciones:
+'pendiente': La tarea aún no se ha completado.
+'completada': La tarea ha sido completada.
+Valor por defecto: 'pendiente'.
+Longitud máxima: 20 caracteres.
+
+# puntos (PositiveIntegerField):
+Tipo: PositiveIntegerField
+Descripción: Representa la cantidad de puntos asociados a la tarea. Este campo puede usarse para valorar la tarea según su dificultad o importancia.
+Valor por defecto: 1.
+Restricción: Solo se permiten valores enteros positivos (mayores que cero).
+
+# usuario (ForeignKey):
+Tipo: ForeignKey
+Descripción: Este campo establece una relación con el modelo Usuario, lo que significa que cada tarea está vinculada a un usuario específico.
+Comportamiento en caso de eliminación: Si un usuario es eliminado, las tareas asociadas a este se establecerán en NULL (es decir, el campo usuario quedará vacío).
+null=True: Permite que este campo pueda ser nulo, lo que indica que una tarea puede no estar asociada a ningún usuario.
 
 
 
