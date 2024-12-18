@@ -34,6 +34,17 @@ pip list
 Ejecuta tu proyecto
 Después de instalar las dependencias, puedes proceder con los comandos necesarios para ejecutar tu proyecto.
 
+Crear Super Usuario
+python manage.py createsuperuser
+
+pasos
+1.-Colocar nombre de usuario.
+2.-Colocar Contraseña.
+3.-Reingresar Contraseña.
+
+
+
+
 # DESCRIPCIÓN DE MODELOS.
 # 1. Logro
 El modelo Logro representa un logro que se asocia a un usuario dentro de la aplicación. Puede ser utilizado para registrar cualquier tipo de éxito, tarea completada o meta alcanzada por un usuario.
