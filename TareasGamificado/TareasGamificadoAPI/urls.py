@@ -30,9 +30,9 @@ urlpatterns = [
     path('tareas_lista_json/', tarea_lista, name='tarea_lista_json'),
     path('tarea_json/<int:pk>/', tarea_detalle, name='tarea_detalle_json'),
 
-    path('usuariosListApi/', usuario_lista, name='usuario_lista_json'),
-    path('usuariosListApi/<int:pk>/', usuario_detalle, name='usuario_detalle_json'),
+    path('usuario_lista_json/', usuario_lista, name='usuario_lista_json'),
+    path('usuario_json/<int:pk>/', usuario_detalle, name='usuario_detalle_json'),
 
-    path('logrosListApi/', logro_lista, name='logro_lista_json'),
-    path('logrosListApi/<int:pk>/', logro_detalle, name='logro_detalle_json'),
+    path('logro_lista_json/', logro_lista, name='logro_lista_json'),
+    path('logro_json/<int:pk>/', logro_detalle, name='logro_detalle_json'),
 ]
