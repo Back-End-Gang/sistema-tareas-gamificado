@@ -42,16 +42,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
-    'crispy_forms',
-    'crispy_bulma',
     'tareas',
     'usuarios',
     'logros',
     'TareasGamificadoAPI',
 ]
-
-CRISPY_ALLOWED_TEMPLATE_PACKS = 'bulma'
-CRISPY_TEMPLATE_PACK = 'bulma'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
