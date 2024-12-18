@@ -1,6 +1,38 @@
-# sistema-tareas-gamificado
+# Sistema-tareas-gamificado
+# Requerimeintos:
+Django==5.1.1
+djangorestframework==3.15.2
+djangorestframework_simplejwt==5.3.1
+PyJWT==2.10.1
+PyJWT==2.10.1
+Pip Install Requirements.txt in Python
+Pasos para usar pip install con requirements.txt:
+Asegurandonos de tener Python instalado
 
+Verificar que Python esté instalado ejecutando el siguiente comando en tu terminal:
+python --version
+Si usas sistemas basados en Unix (Linux o Mac) o tienes varias versiones de Python instaladas, puede que necesites usar:
+python3 --versión
 
+En Windows:
+venv\Scripts\activate
+
+En Linux/Mac:
+source venv/bin/activate
+Navegando al directorio donde está tu archivo requirements.txt
+
+Usa el comando cd para acceder al directorio raíz del proyecto donde se encuentra el archivo requirements.txt:
+cd ruta/al/directorio
+Ejecuta el comando para instalar las dependencias
+
+Usa pip para instalar todas las librerías listadas en el archivo requirements.txt:
+pip install -r requirements.txt
+Verifica que las librerías se instalaron correctamente
+
+Lista las librerías instaladas para confirmar:
+pip list
+Ejecuta tu proyecto
+Después de instalar las dependencias, puedes proceder con los comandos necesarios para ejecutar tu proyecto.
 
 # DESCRIPCIÓN DE MODELOS.
 # 1. Logro
