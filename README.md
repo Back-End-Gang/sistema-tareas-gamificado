@@ -184,7 +184,12 @@ URL	                         Método	Vista Asociada	Descripción
 
 ## Endpoints De Visualización Json
 URL
-
+tareas_lista_json/
+tarea_json/<int:pk>/
+usuario_lista_json/
+usuario_json/<int:pk>/
+logro_lista_json/
+logro_json/<int:pk>/
 
 
 
