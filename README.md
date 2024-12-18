@@ -182,6 +182,12 @@ URL	                         Método	Vista Asociada	Descripción
 /actualizar_logros/<int:pk>/ PUT	LogroEditar	    Actualiza un logro específico por su ID.
 /eliminar_logros/<int:pk>/	 DELETE	LogroEliminar	Elimina un logro específico por su ID.
 
+## Endpoints De Visualización Json
+URL
+
+
+
+
 # Métodos HTTP Utilizados
 GET: Obtener datos.
 
