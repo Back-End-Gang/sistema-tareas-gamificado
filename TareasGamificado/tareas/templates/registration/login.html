@@ -15,10 +15,10 @@
         height: 100vh; /* Tamaño vertical de la sección */
       }
       .seccion-imagen img { /* No funciona por ahora */
-        max-width: 80%;
-        height: auto;
+        max-width: 100%;
+        width: 1600px;
+        height: 954px;
         border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
       .contenedor-form {
         margin: 0 auto;
@@ -74,7 +74,7 @@
       </div>
 
       <div class="column seccion-imagen">
-        <img src="/../sistema-tareas-gamificado/TareasGamificado/img/esqueleto-cool.png" alt="">
+        <img src="{% static 'img/esqueleto_cool.png' %}">
       </div>
     </div>
   </body>
