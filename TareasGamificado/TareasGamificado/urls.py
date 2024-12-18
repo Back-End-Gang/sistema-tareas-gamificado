@@ -13,20 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.contrib import admin
-from tareas.views import crear_tarea, listar_tareas, actualizar_tarea, eliminar_tarea, Home, LoginVista
+from tareas.views import *
 from usuarios.views import *
 from logros.views import *
 from TareasGamificadoAPI import views as tarea_views
-from LogrosGamificadoAPI import views as logro_views
-from UsuariosGamificadoAPI import views as usuario_views
+from TareasGamificadoAPI import urls as api_urls
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Home, name='index'),
-    path('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html')),
-    #tarea
+    path('api/', include(api_urls)),
+    path('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('accounts/logout/', logoutVista, name='logout'),
     path('crear_tarea/', crear_tarea, name='crear_tarea'),
     path('listar_tareas/', listar_tareas, name='listar_tareas'),
     path('actualizar_tarea/<int:id>/', actualizar_tarea, name='actualizar_tarea'),
@@ -41,14 +42,4 @@ urlpatterns = [
     path('crear/', crear_logro, name='crear_logro'),
     path('actualizar_logros/<int:id>/', editar_logro, name='editar_logro'),
     path('eliminar_logro/<int:id>/', eliminar_logro, name='eliminar_logro'),
-    #API Tarea
-    path('tareasListApi/', tarea_views.tarea_list, name='tareaListaAPI'),
-    path('tareasListApi/<int:pk>/', tarea_views.tarea_detail, name='tarea_detail'),
-    #API Logro
-    path('logrosListApi/', logro_views.logros_list, name='logrosListaAPI'),
-    path('logrosListApi/<int:pk>/', logro_views.logros_detail, name='logros_detail'),
-    #API Usuario
-    path('usuariosListApi/', usuario_views.usuarios_list, name='usuariosListaAPI'),
-    path('usuariosListApi/<int:pk>/', usuario_views.usuarios_detail, name='usuarios_detail'),
-    
 ]

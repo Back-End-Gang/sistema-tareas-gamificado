@@ -23,6 +23,15 @@
         .pagination a {
             margin: 0 5px;
         }
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px; /* Adjust if necessary */
+        }
+        .buttons-container .button {
+            margin: 0 10px; /* Optional: Adjust spacing between buttons */
+        }
     </style>
     
 </head>
@@ -41,7 +50,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for logro in page_obj %}
+                {% for logro in page_obj.object_list %}
                 <tr>
                     <td>{{ logro.nombre }}</td>
                     <td>{{ logro.descripcion }}</td>
@@ -53,8 +62,14 @@
                         {% endif %}
                     </td>
                     <td>
+                    {% if url_actual == '/api/listar_logros/'%}
+                        <a class="button is-info is-small" href="{% url 'actualizar_logro_api' logro.id %}">Actualizar via API</a>
+                        <a class="button is-info is-small" href="{% url 'logro_detalle_json' logro.id %}">Mostrar en formato JSON</a>
+                        <a class="button is-danger is-small" href="{% url 'eliminar_logro_api' logro.id %}">Eliminar via API</a>
+                    {% else %}
                         <a class="button is-info is-small" href="{% url 'editar_logro' logro.id %}">Actualizar</a>
                         <a class="button is-danger is-small" href="{% url 'eliminar_logro' logro.id %}">Eliminar</a>
+                    {% endif %}
                     </td>
                 </tr>
                 {% empty %}
@@ -85,11 +100,18 @@
         </div>
 
         <p class="has-text-centered">
-            <a class="button is-primary" href="{% url 'crear_logro' %}">Crear nuevo logro</a>
+            {% if url_actual == '/api/listar_logros/'%}
+                <a class="button is-primary" href="{% url 'crear_logro_api' %}">Crear nuevo logro</a>
+            {% else %}
+                <a class="button is-primary" href="{% url 'crear_logro' %}">Crear nuevo logro</a>
+            {% endif %}
         </p>
-        <form action="/">
-            <input type="submit" class="button is-dark" value="Volver a inicio" />
-        </form>
+        {% if url_actual == '/api/listar_logros/' %}
+            <a class="button is-dark is-info" href="{% url 'index_api' %}">Volver a Inicio</a>
+            <a class="button is-dark is-info" href="{% url 'logro_lista_json' %}">Mostrar en formato JSON</a>
+        {% else %}
+            <a class="button is-dark is-info" href="{% url 'index' %}">Volver a Inicio</a>
+        {% endif %}
     </div>
 </body>
 </html>

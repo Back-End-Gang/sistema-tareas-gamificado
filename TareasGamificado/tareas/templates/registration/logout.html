@@ -3,7 +3,7 @@
   <head>
     {% load static %}
     <meta charset="utf-8">
-    <title>Login</title>
+    <title>Logout</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
 
     <style>
@@ -37,39 +37,15 @@
     <div class="columns is-gapless is-fullheight">
 
       <div class="column is-one-third seccion-contenido">
-        <p class="title has-text-centered">Inicio de Sesión</p>
+        <p class="title has-text-centered">Cierre de Sesión</p>
+        <h1 class="subtitle has-text-centered">Se ha cerrado sesión correctamente</p>
+        <br/><br/>
         <div class="contenedor-form">
-
-          {% if url_actual == '/api/accounts/login/' %}
-            <form method="POST" action="{% url 'api-login' %}">
+          {% if logout_url_actual == '/api/accounts/logout/' %}
+            <a class="button is-danger" href="{% url 'api-login' %}">Volver a iniciar sesión</a>
           {% else %}
-            <form method="POST" action="{% url 'login' %}">
+            <a class="button is-danger" href="{% url 'login' %}">Volver a iniciar sesión</a>
           {% endif %}
-          
-              {% csrf_token %}
-
-              <div class="field">
-                <label class="label">Usuario</label>
-                <div class="control">
-                  <input type="text" class="input" required name="username" placeholder="Ingrese su usuario">
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="label">Contraseña</label>
-                <div class="control">
-                  <input type="password" class="input" required name="password" placeholder="Ingrese su contraseña">
-                </div>
-              </div>
-
-              <br/>
-
-              <div class="field">
-                <div class="control">
-                  <input type="submit" class="button is-danger is-fullwidth" value="Iniciar Sesión">
-                </div>
-              </div>
-            </form>
         </div>
       </div>
 

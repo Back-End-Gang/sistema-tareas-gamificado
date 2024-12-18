@@ -62,7 +62,11 @@
         </form>
 
         <p class="has-text-centered">
-            <a class="button is-text" href="{% url 'listar_logros' %}">Volver a logros</a>
+            {% if url_actual == '/api/crear_logro/' %}
+            <a class="button is-text" href="{% url 'listar_logros_api' %}">Volver a vista API de logros</a>
+            {% else %}
+            <a class="button is-text" href="{% url 'listar_logros' %}">Volver a mis logros</a>
+            {% endif %}
         </p>
     </div>
 

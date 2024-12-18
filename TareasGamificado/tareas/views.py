@@ -1,18 +1,28 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
 from .models import Tarea
 from usuarios.models import Usuario
+from TareasGamificado.decorators.excluir_jwt import excluido_jwt
 
 # Create your views here.
 
+@permission_classes([AllowAny])
+@excluido_jwt
 def Home(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'url_actual': request.path})
 
 @login_required
+def logoutVista(request):
+    logout(request)
+    print(request.path)
+    return render(request, 'registration/logout.html', {'logout_url_actual': request.path})
 
+@excluido_jwt
 def LoginVista(request):
 
     if request.method == "POST":
@@ -30,8 +40,7 @@ def LoginVista(request):
             messages.error(request, "Credenciales inválidas")
             return redirect('login')
 
-    return render(request, 'login.html')
-
+    return render(request, 'login.html', {'url_actual': request.path})
 
 @login_required
 def crear_tarea(request):
@@ -53,7 +62,7 @@ def crear_tarea(request):
             usuario=usuario,
         )
         return redirect('listar_tareas')
-    return render(request, 'tareas/CrearTareas.html', {'usuarios': usuarios})
+    return render(request, 'tareas/CrearTareas.html', {'usuarios': usuarios, 'url_actual': request.path})
 
 @login_required
 def listar_tareas(request):
@@ -72,6 +81,8 @@ def actualizar_tarea(request, id):
         tarea.titulo = request.POST.get('titulo')
         tarea.descripcion = request.POST.get('descripcion')
         usuario_id = request.POST.get('usuario')
+        tarea.estado = request.POST.get('estado')
+        tarea.puntos = request.POST.get('puntos')
         tarea.usuario = Usuario.objects.get(id=usuario_id) if usuario_id else None
         
         tarea.save()

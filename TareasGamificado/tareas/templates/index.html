@@ -6,17 +6,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+
+    <style>
+        .notification {
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        .txt_field input {
+            max-width: 100%;
+        }
+        .botones-menu {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px; /* Spacing between buttons */
+        }
+    </style>
 </head>
+
 <body>
-    <div class="container is-fluid">
+    <div class="botones-menu">
+        <!-- Checkeo un poco hackey para mostrar el botón de manera correcta (poner autenticado y user.is_authenticated no funcionaba) -->
+        {% if autenticado and url_actual == '/api/' %} 
+            <form action="accounts/logout/">
+                <input type="submit" class="button is-link" value="Cerrar Sesión" />
+            </form>
+        {% elif user.autenticado or user.is_authenticated and url_actual == '/' %}
+            <form action="accounts/logout/">
+                <input type="submit" class="button is-link" value="Cerrar Sesión" />
+            </form>
+        {% else %}
+            <form action="accounts/login/">
+                <input type="submit" class="button is-link" value="Iniciar Sesión" />
+            </form>
+        {% endif %} 
+        <!-- Revisión dinámica para cambiar la acción y texto del botón sin tener que crear otra página o botón, parte de la función Home -->
+        {% if url_actual == '/' %}
+            <form action="api/">
+                <input type="submit" class="button is-dark is-info is-outlined" value="Ir a vista de API" />
+            </form>
+        {% else %}
+            <form action="/">
+                <input type="submit" class="button is-dark is-info is-outlined" value="Ir a vista principal" />
+            </form>
+        {% endif %}
+    </div>
+
+    <div class="container has-text-centered">
+        <br/><br/>
         <P class="title">¡Bienvenid@ a la página de inicio!</P> <br />
         <p class="subtitle">Debes loguearte para ingresar a las diferentes opciones!</p>
+    </div>
+    <br/><br/>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="container">
+            <div class="notification is-primary has-text-centered is-{{ message.tags }}">
+                {{ message }}
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
 
-        <form action="accounts/login/">
-            <input type="submit" class="button is-dark" value="Ir al login" />
+    <br/><br/><br/>
+
+    <div class="container has-text-centered">    
+        <form action="listar_tareas/">
+            <input type="submit" class="button is-large is-dark" value="Tareas" />
         </form>
-        
-        <br />
+
+        <br/><br/>
 
         <div class="dropdown is-hoverable">
             <div class="dropdown-trigger">
@@ -42,63 +102,18 @@
               </div>
             </div>
           </div>
+        <form action="listar_usuarios/">
+            <input type="submit" class="button is-large is-dark" value="Usuarios" />
+        </form>
 
-        <br />
+        <br/><br/>
 
-        <div class="dropdown is-hoverable">
-            <div class="dropdown-trigger">
-              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
-                <span>Usuarios</span>
-                <span class="icon is-small">
-                  <i class="fas fa-angle-down" aria-hidden="true"></i>
-                </span>
-              </button>
-            </div>
-            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
-              <div class="dropdown-content">
-                <div class="dropdown-item">
-                  <p>
-                    <form action="/listar_usuarios/">
-                        <input type="submit" class="button is-dark" value="Usuarios" />
-                    </form>
-                    <form action="/usuariosListApi/">
-                        <input type="submit" class="button is-dark" target="_blank" value="API de Usuarios" />
-                    </form>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        <br />
-
-        <div class="dropdown is-hoverable">
-            <div class="dropdown-trigger">
-              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
-                <span>Logros</span>
-                <span class="icon is-small">
-                  <i class="fas fa-angle-down" aria-hidden="true"></i>
-                </span>
-              </button>
-            </div>
-            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
-              <div class="dropdown-content">
-                <div class="dropdown-item">
-                  <p>
-                    <form action="/listar_logros/">
-                        <input type="submit" class="button is-dark" value="Logro" />
-                    </form>
-                    <form action="logrosListApi/">
-                        <input type="submit" class="button is-dark" target="_blank" value="API de Logros" />
-                    </form>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
+        <form action="listar_logros/">
+            <input type="submit" class="button is-large is-dark" value="Logros" />
+        </form>
+        <br/>
     </div>
+
 
 </body>
 </html>

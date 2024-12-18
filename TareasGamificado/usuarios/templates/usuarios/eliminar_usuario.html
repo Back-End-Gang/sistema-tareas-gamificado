@@ -24,14 +24,19 @@
         <div class="box">
             <p class="is-size-4 has-text-centered">¿Estás seguro de que deseas eliminar el usuario<strong>"{{ usuario.nombre }}"</strong>?</p>
 
-            <form method="POST">
+            <form method="POST" action="{% url 'eliminar_usuario_api' usuario.id %}">
                 {% csrf_token %}
+                <input type="hidden" name="_method" value="DELETE">
                 <div class="field is-grouped is-grouped-centered">
                     <div class="control">
                         <button class="button is-danger" type="submit">Sí, eliminar</button>
                     </div>
                     <div class="control">
-                        <a class="button is-light" href="{% url 'listar_tareas' %}">Cancelar</a>
+                    {% if '/api/eliminar_usuario/' in request.path %}
+                        <a class="button is-light" href="{% url 'listar_usuarios_api' %}">Cancelar</a>
+                    {% else %}
+                        <a class="button is-light" href="{% url 'listar_usuarios' %}">Cancelar</a>
+                    {% endif %}
                     </div>
                 </div>
             </form>

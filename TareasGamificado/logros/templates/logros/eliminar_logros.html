@@ -61,11 +61,22 @@
     </header>
     <main>
         <p>¿Estás seguro de que deseas eliminar este logro?</p>
-        <form method="post">
+        <form method="POST">
             {% csrf_token %}
-            <button type="submit">Eliminar</button>
+            <input type="hidden" name="_method" value="DELETE">
+            <div class="field is-grouped is-grouped-centered">
+                <div class="control">
+                    <button class="button is-danger" type="submit">Sí, eliminar</button>
+                </div>
+                <div class="control">
+                {% if '/api/eliminar_logros/' in request.path %}
+                    <a class="button is-light" href="{% url 'listar_logros_api' %}">Cancelar api</a>
+                {% else %}
+                    <a class="button is-light" href="{% url 'listar_logros' %}">Cancelar</a>
+                {% endif %}
+                </div>
+            </div>
         </form>
-        <a href="{% url 'listar_logros' %}">Volver a la lista de logros</a>
     </main>
 </body>
 </html>
