@@ -78,6 +78,58 @@ Descripción: Este campo establece una relación con el modelo Usuario, lo que s
 Comportamiento en caso de eliminación: Si un usuario es eliminado, las tareas asociadas a este se establecerán en NULL (es decir, el campo usuario quedará vacío).
 null=True: Permite que este campo pueda ser nulo, lo que indica que una tarea puede no estar asociada a ningún usuario.
 
-
-
 # Descripción De Endpoints.
+La estructura básica de tus endpoints incluye:
+
+- URL: La ruta específica a la que se envía una solicitud.
+- Método HTTP: El tipo de acción que se ejecuta (POST, GET, PUT/PATCH, DELETE).
+- Vista Asociada: La clase o función que maneja la lógica del endpoint.
+- Descripción: Qué hace el endpoint (funcionalidad).
+- Descripción de los Endpoints.
+
+1. Endpoints de Autenticación
+URL	              Método	Vista Asociada	 Descripción
+/	              GET	    Home	         Muestra la página de inicio de la API.
+/accounts/login/  POST	    VistaLogin	     Realiza el login del usuario.
+/accounts/logout/ POST	    VistaLogout	     Cierra la sesión del usuario.
+/token/	          POST	    VistaCrearToken	 Vista de desarrollador para generar un nuevo token.
+/token/refresh/	  POST	    TokenRefreshView Vista de desarrollador para refrescar el token existente.
+
+2. Endpoints para Tareas
+URL	                        Método	 Vista Asociada	 Descripción
+/crear_tarea/	            POST	 TareaCrear	     Crea una nueva tarea en la base de datos desde la API.
+/listar_tareas/	            GET	     TareaListar	 Extrae todos los datos del sistema para mostrarlos en una vista API.
+/actualizar_tarea/<int:pk>/	PUT	     TareaEditar	 Actualiza una tarea específica por su ID.
+/eliminar_tarea/<int:pk>/	DELETE	 TareaEliminar	 Elimina una tarea específica por su ID.
+
+3. Endpoints para Usuarios
+URL	                            Método	Vista Asociada	Descripción
+/crear_usuario/	                POST	UsuarioCrear	Crea un nuevo usuario.
+/listar_usuarios/	            GET	    UsuarioListar	Extrae todos los datos del sistema para mostrarlos en una vista API.
+/actualizar_usuario/<int:pk>/	PUT	    UsuarioEditar	Actualiza un usuario específico por su ID.
+/eliminar_usuario/<int:pk>/	    DELETE	UsuarioEliminar	Elimina un usuario específico por su ID.
+
+4. Endpoints para Logros
+URL	                         Método	Vista Asociada	Descripción
+/crear_logro/	             POST	LogroCrear	    Crea un nuevo logro.
+/listar_logros/	             GET	LogroListar	    Extrae todos los datos del sistema para mostrarlos en una vista API.
+/actualizar_logros/<int:pk>/ PUT	LogroEditar	    Actualiza un logro específico por su ID.
+/eliminar_logros/<int:pk>/	 DELETE	LogroEliminar	Elimina un logro específico por su ID.
+
+Métodos HTTP Utilizados
+GET: Obtener datos.
+
+Ejemplo: /listar_tareas/ devuelve todas las tareas.
+POST: Crear datos.
+
+Ejemplo: /crear_tarea/ crea una nueva tarea.
+PUT: Actualizar datos completos.
+
+Ejemplo: /actualizar_tarea/1/ actualiza todos los campos de una tarea con ID = 1.
+DELETE: Eliminar datos.
+
+Ejemplo: /eliminar_tarea/1/ elimina la tarea con ID = 1.
+Parámetros en los Endpoints
+<int:pk>: Representa el ID del data (Primary Key).
+Ejemplo: /actualizar_tarea/3/ significa que se actualizará la tarea con ID = 3.
+Ejemplo de Solicitud HTTP
