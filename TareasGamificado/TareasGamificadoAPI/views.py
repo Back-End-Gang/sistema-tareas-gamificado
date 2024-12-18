@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.middleware.csrf import get_token
@@ -8,8 +7,7 @@ from TareasGamificadoAPI.serializers import *
 from rest_framework.response import Response
 from rest_framework import generics, status
 from rest_framework.views import APIView
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import permission_classes, authentication_classes
+from rest_framework.decorators import permission_classes, authentication_classes, api_view
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -18,7 +16,6 @@ from tareas.models import Tarea
 from usuarios.models import Usuario
 from logros.models import Logro
 from .serializers import TareaSerializer, SerializerCrearToken
-from django import forms
 
 # Crea tokens de acceso y refresco para el usuario
 def obtener_token(user):
@@ -92,13 +89,20 @@ class TareaListar(generics.ListAPIView):
     serializer_class = LogroSerializer
 
     def get(self, request, format=None):
-        tareas = Tarea.objects.all() #Obtiene todos los datos existentes
+        ordenar_campo = request.GET.get('ordenar', 'titulo') # Campo por defecto
+        ordenar_orden = request.GET.get('orden', 'asc') # Dirección del orden
+
+        if ordenar_orden == 'desc':
+            ordenar_campo = f'-{ordenar_campo}'
+
+        tareas = Tarea.objects.all().order_by(ordenar_campo) #Obtiene todos los datos existentes y los ordena según campo
+
         paginator = Paginator(tareas, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         serializer_class = TareaSerializer(tareas, many=True) # Define el modelo que utilizará
         print(request.path)
-        return render(request, 'tareas/ListarTareas.html', {'page_obj': page_obj, 'url_actual': request.path})
+        return render(request, 'tareas/ListarTareas.html', {'page_obj': page_obj, 'url_actual': request.path, 'ordenar_campo': request.GET.get('ordenar', ''), 'ordenar_orden': request.GET.get('orden', 'asc')})
 
 @authentication_classes([JWTAuthentication])
 class TareaCrear(generics.CreateAPIView):
@@ -118,7 +122,6 @@ class TareaCrear(generics.CreateAPIView):
         usuario_id = request.POST.get('usuario')
         usuario = Usuario.objects.get(id=usuario_id) if usuario_id else None
 
-        # Validate and create the task
         Tarea.objects.create(
             titulo=titulo,
             descripcion=descripcion,
@@ -319,22 +322,113 @@ class LogroEliminar(generics.DestroyAPIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@authentication_classes([JWTAuthentication])
-class UsuarioListaCrear(generics.ListCreateAPIView):
-    consulta = Usuario.objects.all() #Obtiene todos los datos existentes
-    serializer = UsuarioSerializer # Define el modelo que utilizará
+# Vistas de la base de datos en formato no gráfico tipo JSON
+@api_view(['GET', 'POST'])
+def tarea_lista(request):
+    if request.method == 'GET':
+        tarea = Tarea.objects.all()
+        serializer = TareaSerializer(tarea, many=True)
+        return Response(serializer.data)
+    
+    if request.method == 'POST':
+        serializer = TareaSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@authentication_classes([JWTAuthentication])
-class UsuarioDetalleEditarEliminar(generics.RetrieveUpdateDestroyAPIView):
-    consulta = Usuario.objects.all()
-    serializer = UsuarioSerializer
+@api_view(['GET', 'POST', 'DELETE'])
+def tarea_detalle(request, pk):
+    try:
+        tarea = Tarea.objects.get(pk=pk)
+    except Tarea.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serializer = TareaSerializer(tarea)
+        return Response(serializer.data)
+    
+    if request.method == 'PUT':
+        serializer = TareaSerializer(tarea, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    if request.method == 'DELETE':
+        tarea.delete()
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
-@authentication_classes([JWTAuthentication])
-class LogroListaCrear(generics.ListCreateAPIView):
-    consulta = Logro.objects.all() #Obtiene todos los datos existentes
-    serializer = LogroSerializer # Define el modelo que utilizará
+@api_view(['GET', 'POST'])
+def usuario_lista(request):
+    if request.method == 'GET':
+        usuario = Usuario.objects.all()
+        serializer = UsuarioSerializer(usuario, many=True)
+        return Response(serializer.data)
+    
+    if request.method == 'POST':
+        serializer = UsuarioSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
-@authentication_classes([JWTAuthentication])
-class LogroDetalleEditarEliminar(generics.RetrieveUpdateDestroyAPIView):
-    consulta = Logro.objects.all()
-    serializer = LogroSerializer
+@api_view(['GET', 'POST', 'DELETE'])
+def usuario_detalle(request, pk):
+    try:
+        usuario = Usuario.objects.get(pk=pk)
+    except Usuario.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serializer = UsuarioSerializer(usuario)
+        return Response(serializer.data)
+    
+    if request.method == 'PUT':
+        serializer = UsuarioSerializer(usuario, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    if request.method == 'DELETE':
+        usuario.delete()
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'POST'])
+def logro_lista(request):
+    if request.method == 'GET':
+        logro = Logro.objects.all()
+        serializer = LogroSerializer(logro, many=True)
+        return Response(serializer.data)
+    
+    if request.method == 'POST':
+        serializer = LogroSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+@api_view(['GET', 'POST', 'DELETE'])
+def logro_detalle(request, pk):
+    try:
+        logro = Logro.objects.get(pk=pk)
+    except Logro.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serializer = LogroSerializer(logro)
+        return Response(serializer.data)
+    
+    if request.method == 'PUT':
+        serializer = LogroSerializer(logro, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    if request.method == 'DELETE':
+        logro.delete()
+        return Response(status=status.HTTP_400_BAD_REQUEST)

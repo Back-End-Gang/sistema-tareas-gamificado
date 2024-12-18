@@ -22,6 +22,15 @@
         .pagination a {
             margin: 0 5px;
         }
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px; /* Adjust if necessary */
+        }
+        .buttons-container .button {
+            margin: 0 10px; /* Optional: Adjust spacing between buttons */
+        }
     </style>
 </head>
 <body>
@@ -33,10 +42,22 @@
             <table class="table is-fullwidth is-striped">
                 <thead>
                     <tr>
-                        <th>Título</th>
+                        <th>
+                            <a href="?ordenar=titulo&orden={% if ordenar_campo == 'titulo' and ordenar_orden == 'asc' %}desc{% else %}asc{% endif %}">
+                                Título
+                            </a>
+                        </th>
                         <th>Descripción</th>
-                        <th>Usuario Asignado</th>
-                        <th>Estado</th>
+                        <th>
+                            <a href="?ordenar=usuario__nombre&orden={% if ordenar_campo == 'usuario_nombre' and ordenar_orden == 'asc' %}desc{% else %}asc{% endif %}">
+                                Usuario Asignado
+                            </a>
+                        </th>
+                        <th>
+                            <a href="?ordenar=estado&orden={% if ordenar_campo == 'estado' and ordenar_orden == 'asc' %}desc{% else %}asc{% endif %}">
+                                Estado
+                            </a>
+                        </th>
                         <th>Puntos</th>
                         <th>Acciones</th>
                     </tr>
@@ -58,6 +79,7 @@
                             <td>
                                 {% if url_actual == '/api/listar_tareas/'%}
                                     <a class="button is-info is-small" href="{% url 'actualizar_tarea_api' tarea.id %}">Actualizar via API</a>
+                                    <a class="button is-info is-small" href="{% url 'tarea_detalle_json' tarea.id %}">Mostrar en formato JSON</a>
                                     <a class="button is-danger is-small" href="{% url 'eliminar_tarea_api' tarea.id %}">Eliminar via API</a>
                                 {% else %}
                                     <a class="button is-info is-small" href="{% url 'actualizar_tarea' tarea.id %}">Actualizar</a>
@@ -67,7 +89,7 @@
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="5" class="has-text-centered">No tienes tareas.</td>
+                            <td colspan="6" class="has-text-centered">No tienes tareas.</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -99,11 +121,15 @@
                 <a class="button is-primary" href="{% url 'crear_tarea' %}">Crear nueva tarea</a>
             {% endif %}
         </p>
-        {% if url_actual == '/api/listar_tareas/' %}
-            <a class="button is-dark is-info" href="{% url 'index_api' %}">Volver a Inicio</a>
-        {% else %}
-            <a class="button is-dark is-info" href="{% url 'index' %}">Volver a Inicio</a>
-        {% endif %}
+        <div class="buttons-container">
+            {% if url_actual == '/api/listar_tareas/' %}
+                <a class="button is-dark is-info" href="{% url 'index_api' %}">Volver a Inicio</a>
+                <a class="button is-dark is-info" href="{% url 'tarea_lista_json' %}">Mostrar en formato JSON</a>
+            {% else %}
+                <a class="button is-dark is-info" href="{% url 'index' %}">Volver a Inicio</a>
+            {% endif %}
+            
+        </div>
     </div>
 
 

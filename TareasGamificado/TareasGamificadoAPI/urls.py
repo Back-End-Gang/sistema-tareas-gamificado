@@ -26,4 +26,13 @@ urlpatterns = [
     path('listar_logros/', LogroListar.as_view(), name='listar_logros_api'),
     path('actualizar_logros/<int:pk>/', LogroEditar.as_view(), name='actualizar_logro_api'),
     path('eliminar_logros/<int:pk>/', LogroEliminar.as_view(), name='eliminar_logro_api'),
+
+    path('tareas_lista_json/', tarea_lista, name='tarea_lista_json'),
+    path('tarea_json/<int:pk>/', tarea_detalle, name='tarea_detalle_json'),
+
+    path('usuariosListApi/', usuario_lista, name='usuario_lista_json'),
+    path('usuariosListApi/<int:pk>/', usuario_detalle, name='usuario_detalle_json'),
+
+    path('logrosListApi/', logro_lista, name='logro_lista_json'),
+    path('logrosListApi/<int:pk>/', logro_detalle, name='logro_detalle_json'),
 ]
