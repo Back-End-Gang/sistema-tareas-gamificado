@@ -27,9 +27,20 @@
 
 <body>
     <div class="botones-menu">
-        <form action="accounts/login/">
-            <input type="submit" class="button is-link" value="Ir al login" />
-        </form>
+        <!-- Checkeo un poco hackey para mostrar el botón de manera correcta (poner autenticado y user.is_authenticated no funcionaba) -->
+        {% if autenticado and url_actual == '/api/' %} 
+            <form action="accounts/logout/">
+                <input type="submit" class="button is-link" value="Cerrar Sesión" />
+            </form>
+        {% elif user.autenticado or user.is_authenticated and url_actual == '/' %}
+            <form action="accounts/logout/">
+                <input type="submit" class="button is-link" value="Cerrar Sesión" />
+            </form>
+        {% else %}
+            <form action="accounts/login/">
+                <input type="submit" class="button is-link" value="Iniciar Sesión" />
+            </form>
+        {% endif %} 
         <!-- Revisión dinámica para cambiar la acción y texto del botón sin tener que crear otra página o botón, parte de la función Home -->
         {% if url_actual == '/' %}
             <form action="api/">
@@ -61,36 +72,22 @@
     <br/><br/><br/>
 
     <div class="container has-text-centered">    
-
         <form action="listar_tareas/">
-            <input type="submit" class="button is-dark" value="Tareas" />
-        </form>
-        <br/>
-        <form action="/tareasListApi/">
-            <input type="submit" class="button is-dark" type="_blank" value="API de Tareas" />
+            <input type="submit" class="button is-large is-dark" value="Tareas" />
         </form>
 
         <br/><br/>
 
-        <form action="/listar_usuarios/">
-            <input type="submit" class="button is-dark" value="Usuarios" />
+        <form action="listar_usuarios/">
+            <input type="submit" class="button is-large is-dark" value="Usuarios" />
         </form>
-        <br/>
-        <form action="/">
-            <input type="submit" class="button is-dark" type="_blank" value="API de Usuarios" />
-        </form> <a>(Se debe reemplazar)</a>
 
-        
-        <br/>
+        <br/><br/>
 
-        <form action="/listar_logros/">
-            <input type="submit" class="button is-dark" value="Logro" />
+        <form action="listar_logros/">
+            <input type="submit" class="button is-large is-dark" value="Logros" />
         </form>
         <br/>
-        <form action="/">
-            <input type="submit" class="button is-dark" type="_blank" value="API de Logros" />
-        </form>
-        <a>(Se debe reemplazar)</a>
     </div>
 
 

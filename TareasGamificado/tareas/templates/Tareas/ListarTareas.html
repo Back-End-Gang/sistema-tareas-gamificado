@@ -38,6 +38,7 @@
                         <th>Usuario Asignado</th>
                         <th>Estado</th>
                         <th>Puntos</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,8 +56,13 @@
                             <td>{{ tarea.estado }}</td>
                             <td>{{ tarea.puntos }}</td>
                             <td>
-                                <a class="button is-info is-small" href="{% url 'actualizar_tarea' tarea.id %}">Actualizar</a>
-                                <a class="button is-danger is-small" href="{% url 'eliminar_tarea' tarea.id %}">Eliminar</a>
+                                {% if url_actual == '/api/listar_tareas/'%}
+                                    <a class="button is-info is-small" href="{% url 'actualizar_tarea_api' tarea.id %}">Actualizar via API</a>
+                                    <a class="button is-danger is-small" href="{% url 'eliminar_tarea_api' tarea.id %}">Eliminar via API</a>
+                                {% else %}
+                                    <a class="button is-info is-small" href="{% url 'actualizar_tarea' tarea.id %}">Actualizar</a>
+                                    <a class="button is-danger is-small" href="{% url 'eliminar_tarea' tarea.id %}">Eliminar</a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% empty %}
@@ -87,11 +93,17 @@
         </div>
 
         <p class="has-text-centered">
-            <a class="button is-primary" href="{% url 'crear_tarea' %}">Crear nueva tarea</a>
+            {% if url_actual == '/api/listar_tareas/'%}
+                <a class="button is-primary" href="{% url 'crear_tarea_api' %}">Crear nueva tarea</a>
+            {% else %}
+                <a class="button is-primary" href="{% url 'crear_tarea' %}">Crear nueva tarea</a>
+            {% endif %}
         </p>
-        <form action="/">
-            <input type="submit" class="button is-dark" value="Volver a inicio" />
-        </form>
+        {% if url_actual == '/api/listar_tareas/' %}
+            <a class="button is-dark is-info" href="{% url 'index_api' %}">Volver a Inicio</a>
+        {% else %}
+            <a class="button is-dark is-info" href="{% url 'index' %}">Volver a Inicio</a>
+        {% endif %}
     </div>
 
 

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 LOGIN_REDIRECT_URL = '/'
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,11 +42,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt.token_blacklist',
+    'crispy_forms',
+    'crispy_bulma',
     'tareas',
     'usuarios',
     'logros',
-    'TareasGamificadoAPI'
+    'TareasGamificadoAPI',
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bulma'
+CRISPY_TEMPLATE_PACK = 'bulma'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'TareasGamificado.middleware.jwt_auth.AutenticacionJWTMiddleware',
 ]
 
 ROOT_URLCONF = 'TareasGamificado.urls'
@@ -70,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'TareasGamificado.context_processors.contexto_autenticacion.estado_autenticacion',
             ],
         },
     },
@@ -86,8 +95,24 @@ REST_FRAMEWORK = {
     ],
 }
 
+# Configuración del sistema de verificación en tokens JSON
 SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES": ("Bearer",),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10), # Cantidad de tiempo que tiene que pasar para que el token creado expire
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=15),
+    "ROTATE_REFRESH_TOKENS": True, # Genera un nuevo refresh_token cada vez que es utilizado
+    "BLACKLIST_AFTER_ROTATION": True, # Permite que los tokens de refresco que ya hayan sido utilizados no vuelvan a ser usados
+    "UPDATE_LAST_LOGIN": False,
+
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "VERIFYING_KEY": "",
+    "AUDIENCE": None,
+    "ISSUER": None,
+    "JSON_ENCODER": None,
+    "JWK_URL": None,
+    "LEEWAY": 0,
+
+    "AUTH_HEADER_TYPES": ("Bearer",), # Define el nombre que debe tener el header de autorización
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
@@ -99,7 +124,11 @@ SIMPLE_JWT = {
 
     "JTI_CLAIM": "jti",
 
-    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=10),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+
+    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.SerializerCrearToken",
     "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
     "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
     "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",

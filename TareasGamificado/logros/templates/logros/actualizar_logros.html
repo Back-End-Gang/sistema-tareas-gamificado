@@ -24,7 +24,8 @@
 
     <main class="section">
         <div class="container">
-            <form method="post" class="box">
+            <form method="POST">
+                <input type="hidden" name="_method" value="PUT">
                 {% csrf_token %}
                 <div class="field">
                     <label class="label" for="nombre">Nombre:</label>
@@ -69,7 +70,11 @@
                         <button type="submit" class="button is-success">Guardar</button>
                     </div>
                     <div class="control">
-                        <a href="{% url 'listar_logros' %}" class="button is-link">Volver</a>
+                    {% if '/api/actualizar_logros/' in request.path %}
+                        <a class="button is-dark is-info" href="{% url 'listar_logros_api' %}">Volver</a>
+                    {% else %}
+                        <a class="button is-dark is-info" href="{% url 'listar_logros' %}">Volver</a>
+                    {% endif %}
                     </div>
                 </div>
             </form>

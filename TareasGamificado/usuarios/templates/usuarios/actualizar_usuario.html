@@ -23,6 +23,7 @@
 
         <div class="box">
             <form method="POST">
+                <input type="hidden" name="_method" value="PUT">
                 {% csrf_token %}
 
                 <div class="field">
@@ -51,7 +52,11 @@
                         <button class="button is-primary" type="submit">Actualizar Usuario</button>
                     </div>
                     <div class="control">
-                        <a class="button is-light" href="{% url 'listar_tareas' %}">Cancelar</a>
+                    {% if '/api/actualizar_usuario/' in request.path %}
+                        <a class="button is-dark is-info" href="{% url 'listar_usuarios_api' %}">Volver</a>
+                    {% else %}
+                        <a class="button is-dark is-info" href="{% url 'listar_usuarios' %}">Volver</a>
+                    {% endif %}
                     </div>
                 </div>
             </form>

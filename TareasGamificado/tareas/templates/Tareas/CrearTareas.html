@@ -85,7 +85,11 @@
         </form>
 
         <p class="has-text-centered">
+            {% if url_actual == '/api/crear_tarea/' %}
+            <a class="button is-text" href="{% url 'listar_tareas_api' %}">Volver a vista API de tareas</a>
+            {% else %}
             <a class="button is-text" href="{% url 'listar_tareas' %}">Volver a mis tareas</a>
+            {% endif %}
         </p>
     </div>
 

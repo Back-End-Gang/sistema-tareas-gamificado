@@ -23,6 +23,7 @@
 
         <div class="box">
             <form method="POST">
+                <input type="hidden" name="_method" value="PUT">
                 {% csrf_token %}
 
                 <div class="field">
@@ -56,12 +57,38 @@
                     </div>
                 </div>
 
+                <div class="field">
+                    <label class="label" for="estado">Estado</label>
+                    <div class="control">
+                        <div class="select">
+                            <select name="estado" id="estado">
+                                <option value="">-- Elige un estado --</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="completada">Completada</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="puntos">Puntos (1-100)</label>
+                        <div class="control">
+                            <div>
+                                <input class="input" type="number" id="puntos" name="puntos" min="1" max="100" />
+                            </div>
+                        </div>
+                </div>
+
                 <div class="field is-grouped is-grouped-centered">
                     <div class="control">
                         <button class="button is-primary" type="submit">Actualizar tarea</button>
                     </div>
                     <div class="control">
-                        <a class="button is-light" href="{% url 'listar_tareas' %}">Cancelar</a>
+                    {% if '/api/actualizar_tarea/' in request.path %}
+                        <a class="button is-dark is-info" href="{% url 'listar_tareas_api' %}">Volver</a>
+                    {% else %}
+                        <a class="button is-dark is-info" href="{% url 'listar_tareas' %}">Volver</a>
+                    {% endif %}
                     </div>
                 </div>
             </form>

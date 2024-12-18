@@ -59,7 +59,11 @@
 
         <!-- Enlace para volver a la lista de usuarios -->
         <p class="has-text-centered">
+            {% if url_actual == '/api/crear_usuario/' %}
+            <a class="button is-text" href="{% url 'listar_usuarios_api' %}">Volver a vista API de usuarios</a>
+            {% else %}
             <a class="button is-text" href="{% url 'listar_usuarios' %}">Volver a usuarios</a>
+            {% endif %}
         </p>
     </div>
 
