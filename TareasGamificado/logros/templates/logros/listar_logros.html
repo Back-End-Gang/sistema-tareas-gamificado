@@ -106,12 +106,14 @@
                 <a class="button is-primary" href="{% url 'crear_logro' %}">Crear nuevo logro</a>
             {% endif %}
         </p>
-        {% if url_actual == '/api/listar_logros/' %}
-            <a class="button is-dark is-info" href="{% url 'index_api' %}">Volver a Inicio</a>
-            <a class="button is-dark is-info" href="{% url 'logro_lista_json' %}">Mostrar en formato JSON</a>
-        {% else %}
-            <a class="button is-dark is-info" href="{% url 'index' %}">Volver a Inicio</a>
-        {% endif %}
+        <div class="buttons-container">
+            {% if url_actual == '/api/listar_logros/' %}
+                <a class="button is-dark is-info" href="{% url 'index_api' %}">Volver a Inicio</a>
+                <a class="button is-dark is-info" href="{% url 'logro_lista_json' %}">Mostrar en formato JSON</a>
+            {% else %}
+                <a class="button is-dark is-info" href="{% url 'index' %}">Volver a Inicio</a>
+            {% endif %}
+        </div>
     </div>
 </body>
 </html>
