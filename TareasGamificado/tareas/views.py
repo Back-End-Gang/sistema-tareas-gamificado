@@ -42,6 +42,7 @@ def LoginVista(request):
 
     return render(request, 'login.html', {'url_actual': request.path})
 
+@excluido_jwt
 @login_required
 def crear_tarea(request):
     usuarios = Usuario.objects.all()
@@ -65,6 +66,7 @@ def crear_tarea(request):
     return render(request, 'tareas/CrearTareas.html', {'usuarios': usuarios, 'url_actual': request.path})
 
 @login_required
+@excluido_jwt
 def listar_tareas(request):
     tareas = Tarea.objects.select_related('usuario').all()
     paginator = Paginator(tareas, 10)  # 10 tareas por página
@@ -74,6 +76,7 @@ def listar_tareas(request):
 
 
 @login_required
+@excluido_jwt
 def actualizar_tarea(request, id):
     tarea = get_object_or_404(Tarea, id=id)
     usuarios = Usuario.objects.all()
@@ -91,6 +94,7 @@ def actualizar_tarea(request, id):
 
 
 @login_required
+@excluido_jwt
 def eliminar_tarea(request, id):
     tarea = get_object_or_404(Tarea, id=id)
     if request.method == 'POST':
