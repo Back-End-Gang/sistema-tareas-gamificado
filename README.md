@@ -53,6 +53,11 @@ pasos
 2.-Colocar Contraseña.
 3.-Reingresar Contraseña.
 
+## Realizar migraciones
+
+En la terminal integrada de VSCode, ejecutar el comando (en la carpeta que contiene el archivo manage.py) python manage.py makemigrations
+Después, ejecutar en la misma ruta el comando python manage.py migrate
+
 ## Abrir Visual Studio Code y ejecutar el programa
 
 - Ir a ejecutar y depurar (ícono de reproducción con un bicho)
